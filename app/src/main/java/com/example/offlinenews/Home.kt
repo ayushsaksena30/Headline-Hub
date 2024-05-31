@@ -18,12 +18,22 @@ class Home : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootview= inflater.inflate(R.layout.fragment_home, container, false)
-        super.onCreate(savedInstanceState)
-        recyclerView = rootview.findViewById(R.id.recyclerView)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager= LinearLayoutManager(requireActivity())
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        datainit()
+
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager= LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+
+        newsAdapter= newsAdapter(newsList)
+        recyclerView.adapter = newsAdapter
+    }
+
+    private fun datainit(){
         newsList = ArrayList()
 
         newsList.add(headline(R.drawable.difacto_1, "Robotics startup DiFACTO raises \$4.8 Mn"))
@@ -36,10 +46,5 @@ class Home : Fragment() {
         newsList.add(headline(R.drawable.difacto_1, "Robotics startup DiFACTO raises \$4.8 Mn"))
         newsList.add(headline(R.drawable.difacto_1, "Robotics startup DiFACTO raises \$4.8 Mn"))
         newsList.add(headline(R.drawable.difacto_1, "Robotics startup DiFACTO raises \$4.8 Mn"))
-
-        newsAdapter= newsAdapter(newsList)
-        recyclerView.adapter = newsAdapter
-
-        return rootview
     }
 }
