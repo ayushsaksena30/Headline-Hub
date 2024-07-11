@@ -29,10 +29,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         holder.descriptionView.text = currentItem.description
 
         if (currentItem.image != null) {
-            //Log.d("NewsAdapter", "Loading image URL: ${currentItem.urlToImage}")
             Glide.with(holder.itemView.context).load(currentItem.image).into(holder.imageView)
         } else {
-            //Log.d("NewsAdapter", "Image URL is null for item at position $position")
             holder.imageView.setImageResource(R.drawable.rain)
         }
     }

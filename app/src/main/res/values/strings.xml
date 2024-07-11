@@ -2,4 +2,13 @@
     <string name="app_name">OfflineNews</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="interests_tech_science_business">Interests: Tech, Science, Business</string>
+    <string name="address_123_main_st_city_state_country">Address: 123 Main St, City, State, Country</string>
+    <string name="college_example_university">College: Example University</string>
+    <string name="phone_91_23456_78901">Phone: +91 23456 78901</string>
+    <string name="email_john_doe_example_com">Email: john.doe@example.com</string>
+    <string name="age_30">Age: 30</string>
+    <string name="john_doe">John Doe</string>
+    <string name="robotics_startup_difacto_raises_4_8_mn">Robotics startup DiFACTO raises $4.8 Mn</string>
 </resources>

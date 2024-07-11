@@ -1,8 +1,6 @@
 package com.example.offlinenews
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +40,6 @@ class Home : Fragment() {
     }
 
     private fun fetchHomeHeadlines() {
-        Log.d(TAG, "fetchHomeHeadlines: Starting API call")
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://gnews.io/api/")
@@ -55,17 +52,14 @@ class Home : Fragment() {
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 if (response.isSuccessful) {
-                    response.body()?.let { newsResponse ->
-                        Log.d(TAG, "API Response: $newsResponse")
-                        newsAdapter.setNews(newsResponse.articles)
+                    response.body()?.articles?.let {
+                        newsAdapter.setNews(it)
                     }
                 } else {
-                    Log.e(TAG, "fetchHomeHeadlines: API call failed with code ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                Log.e(TAG, "fetchHomeHeadlines: API call failed", t)
             }
         })
     }
