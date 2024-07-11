@@ -15,7 +15,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Home : Fragment() {
+class Sports : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var newsAdapter: NewsAdapter
@@ -50,14 +50,14 @@ class Home : Fragment() {
             .build()
 
         val gNewsApi = retrofit.create(GNewsApi::class.java)
-        val call = gNewsApi.getTopHeadlines(apiKey, "in", language = "en")
+        val call = gNewsApi.getTopHeadlines(apiKey, "in", category = "sports", language = "en")
 
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 if (response.isSuccessful) {
-                    response.body()?.let { newsResponse ->
-                        Log.d(TAG, "API Response: $newsResponse")
-                        newsAdapter.setNews(newsResponse.articles)
+                    response.body()?.articles?.let {
+                        newsAdapter.setNews(it)
+                        Log.d(TAG, "fetchHomeHeadlines: API call successful")
                     }
                 } else {
                     Log.e(TAG, "fetchHomeHeadlines: API call failed with code ${response.code()}")
@@ -66,7 +66,9 @@ class Home : Fragment() {
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 Log.e(TAG, "fetchHomeHeadlines: API call failed", t)
+                // Handle failure
             }
         })
     }
+
 }

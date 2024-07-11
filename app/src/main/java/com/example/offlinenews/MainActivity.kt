@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         bottom_Navigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> replaceFragment(Home())
-                R.id.cricket -> replaceFragment(Cricket())
+                R.id.cricket -> replaceFragment(Sports())
                 R.id.profile -> replaceFragment(Profile())
 
                 else ->{}

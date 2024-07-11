@@ -6,26 +6,41 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
-class newsAdapter(private val newsList: ArrayList<headline>): RecyclerView.Adapter<newsAdapter.headlineViewHolder>(){
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    class headlineViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val imageView: ImageView=itemView.findViewById(R.id.imageView)
-        val textView: TextView=itemView.findViewById(R.id.textView)
+    private var newsList: List<NewsItem> = listOf()
+
+    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val titleView: TextView = itemView.findViewById(R.id.tv_title)
+        val descriptionView: TextView = itemView.findViewById(R.id.tv_description)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): headlineViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.each_item, parent, false)
-        return headlineViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.each_item, parent, false)
+        return NewsViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return newsList.size
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        val currentItem = newsList[position]
+        holder.titleView.text = currentItem.title
+        holder.descriptionView.text = currentItem.description
+
+        if (currentItem.image != null) {
+            //Log.d("NewsAdapter", "Loading image URL: ${currentItem.urlToImage}")
+            Glide.with(holder.itemView.context).load(currentItem.image).into(holder.imageView)
+        } else {
+            //Log.d("NewsAdapter", "Image URL is null for item at position $position")
+            holder.imageView.setImageResource(R.drawable.rain)
+        }
     }
 
-    override fun onBindViewHolder(holder: headlineViewHolder, position: Int) {
-        val news = newsList[position]
-        holder.imageView.setImageResource(news.image)
-        holder.textView.text=news.name
+    override fun getItemCount() = newsList.size
+
+    fun setNews(news: List<NewsItem>) {
+        this.newsList = news
+        notifyDataSetChanged()
     }
 }
